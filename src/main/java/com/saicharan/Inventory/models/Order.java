@@ -30,6 +30,7 @@ public class Order {
 	private String distributorName;
 	private String distributorId;
 	private String deliveryAddress;
+//	private Status status; 
 	public Order() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -46,6 +47,7 @@ public class Order {
 		this.distributorName = distributorName;
 		this.distributorId = distributorId;
 		this.deliveryAddress = deliveryAddress;
+//		this.status = status;
 	}
 	public String getOrderId() {
 		return orderId;
@@ -101,7 +103,11 @@ public class Order {
 	public void setDeliveryAddress(String deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
 	}
-	
-	
+//	public Status getStatus() {
+//		return status;
+//	}
+//	public void setStatus(Status status) {
+//		this.status = status;
+//	}
 	
 }
