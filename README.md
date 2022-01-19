@@ -10,6 +10,13 @@ How to use it.
 - update the project and run as spring boot app.
 - Now test various APIs
 
+A sample application is developed which utilizes the above APIs.
+https://github.com/papanisaicharan/InventoryFrontend
+
+for Frontend application:
+- run npm install
+- run ng serve
+
 This has a simple database model with below collections and fields:
 
 Collections:
