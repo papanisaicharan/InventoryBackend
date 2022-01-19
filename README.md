@@ -13,9 +13,11 @@ How to use it.
 A sample application is developed which utilizes the above APIs.
 https://github.com/papanisaicharan/InventoryFrontend
 
-for Frontend application:
+for Frontend application to run:
 - run npm install
 - run ng serve
+
+Both the frontend and backend with mongodb have to be up and running for the overall application to run.
 
 This has a simple database model with below collections and fields:
 
