@@ -3,6 +3,7 @@ package com.saicharan.Inventory.models;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -18,6 +19,7 @@ import lombok.Setter;
  *  To reduce the boilerplate code we can using lombok
  */
 
+@CompoundIndex(def = "{'productName': 1, 'totalPrice': 1, 'orderedOn': 1, 'quantity': 1, 'distributorName': 1, 'deliveryAddress': 1}")
 @Document
 public class Order {
 	@Id

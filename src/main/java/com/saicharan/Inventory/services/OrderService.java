@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.BooleanOperators.Or;
+import org.springframework.data.mongodb.core.index.TextIndexDefinition;
+import org.springframework.data.mongodb.core.index.TextIndexDefinition.TextIndexDefinitionBuilder;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.TextCriteria;
@@ -71,14 +73,27 @@ public class OrderService {
 		List<Order> totalOrders = orderRepository.findAll();
 		filterResponse.setTotal(totalOrders.size());
 		filterResponse.setOrders(new ArrayList<Order>());
-		if(searchTerm == null || searchTerm.strip().length() == 0) {
-			filterResponse.setResult(totalOrders.size());
-			filterResponse.setOrders(totalOrders);
-		}else {
-			TextQuery textQuery = TextQuery.queryText(new TextCriteria().matchingAny(searchTerm));
-			List<Order> orders = mongoTemplate.find(textQuery, Order.class);
-			filterResponse.setOrders(orders);
-			filterResponse.setResult(orders.size());
+		try {
+			if(searchTerm == null || searchTerm.strip().length() == 0) {
+				filterResponse.setResult(totalOrders.size());
+				filterResponse.setOrders(totalOrders);
+			}else {
+				TextIndexDefinition textIndex = new TextIndexDefinitionBuilder()
+						  .onField("productName")
+						  .onField("totalPrice")
+						  .onField("orderedOn")
+						  .onField("quantity")
+						  .onField("distributorName")
+						  .onField("deliveryAddress")
+						  .build();
+				mongoTemplate.indexOps(Order.class).ensureIndex(textIndex);
+				TextQuery textQuery = TextQuery.queryText(new TextCriteria().matchingAny(searchTerm));
+				List<Order> orders = mongoTemplate.find(textQuery, Order.class);
+				filterResponse.setOrders(orders);
+				filterResponse.setResult(orders.size());
+			}
+		}catch(Exception ex) {
+			throw new GenericException("Error while performing search - Criteria or index", "CriteriaBuildError");
 		}
 		return filterResponse;
 	}
