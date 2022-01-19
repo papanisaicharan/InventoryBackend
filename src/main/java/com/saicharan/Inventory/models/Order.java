@@ -3,6 +3,7 @@ package com.saicharan.Inventory.models;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -21,22 +22,17 @@ import lombok.Setter;
 public class Order {
 	@Id
 	private String orderId;
-	private String productName;
+	@TextIndexed private String productName;
 	private String productId;
-	private float totalPrice;
-	@JsonFormat(pattern = "yyyy/MM/dd")
-	private Date orderedOn;
-	private int quantity;
-	private String distributorName;
+	@TextIndexed private String totalPrice;
+	@TextIndexed private String orderedOn;
+	@TextIndexed private String quantity;
+	@TextIndexed private String distributorName;
 	private String distributorId;
-	private String deliveryAddress;
+	@TextIndexed private String deliveryAddress;
 //	private Status status; 
-	public Order() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public Order(String orderId, String productName, String productId, float totalPrice, Date orderedOn, int quantity,
-			String distributorName, String distributorId, String deliveryAddress) {
+	public Order(String orderId, String productName, String productId, String totalPrice, String orderedOn,
+			String quantity, String distributorName, String distributorId, String deliveryAddress) {
 		super();
 		this.orderId = orderId;
 		this.productName = productName;
@@ -47,7 +43,10 @@ public class Order {
 		this.distributorName = distributorName;
 		this.distributorId = distributorId;
 		this.deliveryAddress = deliveryAddress;
-//		this.status = status;
+	}
+	public Order() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 	public String getOrderId() {
 		return orderId;
@@ -67,22 +66,22 @@ public class Order {
 	public void setProductId(String productId) {
 		this.productId = productId;
 	}
-	public float getTotalPrice() {
+	public String getTotalPrice() {
 		return totalPrice;
 	}
-	public void setTotalPrice(float totalPrice) {
+	public void setTotalPrice(String totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-	public Date getOrderedOn() {
+	public String getOrderedOn() {
 		return orderedOn;
 	}
-	public void setOrderedOn(Date orderedOn) {
+	public void setOrderedOn(String orderedOn) {
 		this.orderedOn = orderedOn;
 	}
-	public int getQuantity() {
+	public String getQuantity() {
 		return quantity;
 	}
-	public void setQuantity(int quantity) {
+	public void setQuantity(String quantity) {
 		this.quantity = quantity;
 	}
 	public String getDistributorName() {
@@ -103,11 +102,6 @@ public class Order {
 	public void setDeliveryAddress(String deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
 	}
-//	public Status getStatus() {
-//		return status;
-//	}
-//	public void setStatus(Status status) {
-//		this.status = status;
-//	}
+	
 	
 }
